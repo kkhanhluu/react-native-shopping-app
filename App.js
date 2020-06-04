@@ -6,9 +6,10 @@ import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 import { AppLoading } from 'expo';
 
-import BodyText from './components/BodyText';
 import Navigator from './navigation/shoppingAppNavigator';
 import productReducer from './store/reducers/product';
+import cartReducer from './store/reducers/cart';
+import orderReducer from './store/reducers/order';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -23,6 +24,8 @@ enableScreens();
 
 const rootReducer = combineReducers({
   products: productReducer,
+  cart: cartReducer,
+  order: orderReducer,
 });
 const store = createStore(rootReducer);
 

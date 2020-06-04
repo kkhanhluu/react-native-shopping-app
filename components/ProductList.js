@@ -10,7 +10,6 @@ const ProductList = (props) => {
       description={itemData.item.description}
       price={itemData.item.price}
       onClick={() => {
-        console.log(props.navigation);
         props.navigation.navigate({
           routeName: 'ProductDetailScreen',
           params: {

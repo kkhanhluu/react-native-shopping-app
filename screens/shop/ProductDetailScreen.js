@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import Colors from '../../constants/Colors';
 import MainButton from '../../components/Button';
+import CartItem from '../../models/cartItem';
+import { addCartItem } from '../../store/actions/cart';
 
 const ProductDetail = (props) => {
+  const dispatch = useDispatch();
+
   const productId = props.navigation.getParam('productId');
   const allProducts = useSelector((state) => state.products.products);
   const product = allProducts.find((product) => product.id === productId);
@@ -21,7 +24,22 @@ const ProductDetail = (props) => {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <MainButton title='Add to bag' />
+        <MainButton
+          title='Add to bag'
+          onPress={() =>
+            dispatch(
+              addCartItem(
+                new CartItem(
+                  1,
+                  product.price,
+                  product.title,
+                  product.imageUrl,
+                  product.price
+                )
+              )
+            )
+          }
+        />
       </View>
     </View>
   );
