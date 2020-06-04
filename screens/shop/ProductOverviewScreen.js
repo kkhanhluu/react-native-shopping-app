@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+import ProductList from '../../components/ProductList';
 
 const ProductOverviewScreen = (props) => {
+  const allProducts = useSelector((state) => state.products.products);
+
   return (
     <View style={styles.screen}>
-      <Text>Product overview Screen!</Text>
+      <ProductList listData={allProducts} navigation={props.navigation} />
     </View>
   );
 };
