@@ -11,6 +11,7 @@ import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 import UserProductScreen from '../screens/user/UserProductScreen';
 import Colors from '../constants/Colors';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const ProductStackNavigator = createStackNavigator({
   ProductOverview: {
@@ -52,4 +53,9 @@ const CartTabNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(CartTabNavigator);
+const sideDrawerNavigator = createDrawerNavigator({
+  Product: CartTabNavigator,
+  Order: createStackNavigator({ order: OrderScreen }),
+});
+
+export default createAppContainer(sideDrawerNavigator);
