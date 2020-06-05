@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Feather, SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
 import CartScreen from '../screens/shop/CartScreen';
@@ -50,12 +50,56 @@ const CartTabNavigator = createBottomTabNavigator(
         fontSize: 13,
       },
     },
+    navigationOptions: {
+      drawerLabel: 'Products',
+      drawerIcon: ({ focused, tintColor }) => (
+        <Feather name='home' size={24} color={tintColor} />
+      ),
+    },
   }
 );
 
-const sideDrawerNavigator = createDrawerNavigator({
-  Product: CartTabNavigator,
-  Order: createStackNavigator({ order: OrderScreen }),
-});
+const userProductStackNavigator = createStackNavigator(
+  {
+    userProduct: {
+      screen: UserProductScreen,
+      navigationOptions: {
+        headerTitle: 'Your Products',
+      },
+    },
+    editProduct: EditProductScreen,
+  },
+  {
+    navigationOptions: {
+      drawerLabel: 'Product management',
+      drawerIcon: ({ focused, tintColor }) => (
+        <Ionicons name='ios-briefcase' size={24} color={tintColor} />
+      ),
+    },
+  }
+);
+
+const sideDrawerNavigator = createDrawerNavigator(
+  {
+    Product: CartTabNavigator,
+    Order: createStackNavigator(
+      { order: OrderScreen },
+      {
+        navigationOptions: {
+          drawerLabel: 'Orders',
+          drawerIcon: ({ focused, tintColor }) => (
+            <Ionicons name='ios-list' size={24} color={tintColor} />
+          ),
+        },
+      }
+    ),
+    UserProduct: userProductStackNavigator,
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.second,
+    },
+  }
+);
 
 export default createAppContainer(sideDrawerNavigator);

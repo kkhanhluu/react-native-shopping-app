@@ -11,7 +11,11 @@ const ProductOverviewScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <ProductList listData={allProducts} navigation={props.navigation} />
+      <ProductList
+        listData={allProducts}
+        navigation={props.navigation}
+        parentScreen='productOverviewScreen'
+      />
     </View>
   );
 };

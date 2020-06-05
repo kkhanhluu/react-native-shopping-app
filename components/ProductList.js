@@ -10,13 +10,23 @@ const ProductList = (props) => {
       description={itemData.item.description}
       price={itemData.item.price}
       onClick={() => {
-        props.navigation.navigate({
-          routeName: 'ProductDetailScreen',
-          params: {
-            productTitle: itemData.item.title,
-            productId: itemData.item.id,
-          },
-        });
+        if (props.parentScreen === 'productOverviewScreen') {
+          props.navigation.navigate({
+            routeName: 'ProductDetailScreen',
+            params: {
+              productTitle: itemData.item.title,
+              productId: itemData.item.id,
+            },
+          });
+        } else {
+          props.navigation.navigate({
+            routeName: 'editProduct',
+            params: {
+              productTitle: itemData.item.title,
+              productId: itemData.item.id,
+            },
+          });
+        }
       }}
     />
   );
