@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     backgroundColor: '#fff',
+    overflow: 'hidden',
     flex: 1,
     padding: 40,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    paddingTop: 25,
   },
   title: {
     fontSize: 25,
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     color: '#999',
     fontWeight: '600',
     marginVertical: 20,
+    overflow: 'hidden',
   },
   priceLabel: {
     fontWeight: '700',
@@ -83,8 +84,7 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   buttonContainer: {
-    paddingVertical: 40,
-    paddingTop: 40,
+    paddingVertical: 20,
     paddingHorizontal: 20,
   },
 });
