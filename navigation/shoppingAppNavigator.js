@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Feather, SimpleLineIcons, Ionicons } from '@expo/vector-icons';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
 import CartScreen from '../screens/shop/CartScreen';
@@ -10,8 +11,8 @@ import OrderScreen from '../screens/shop/OrderScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 import UserProductScreen from '../screens/user/UserProductScreen';
+import AuthScreen from '../screens/user/AuthScreen';
 import Colors from '../constants/Colors';
-import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const ProductStackNavigator = createStackNavigator({
   ProductOverview: {
@@ -102,4 +103,12 @@ const sideDrawerNavigator = createDrawerNavigator(
   }
 );
 
-export default createAppContainer(sideDrawerNavigator);
+const AuthNavigator = createStackNavigator({
+  Auth: { screen: AuthScreen, navigationOptions: { headerShown: false } },
+});
+const MainNavigator = createSwitchNavigator({
+  Auth: AuthNavigator,
+  Shop: sideDrawerNavigator,
+});
+
+export default createAppContainer(MainNavigator);
