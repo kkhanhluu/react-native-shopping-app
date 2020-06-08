@@ -1,5 +1,5 @@
 import PRODUCTS from '../../data/dummy-data';
-import { ADD_PRODUCT, EDIT_PRODUCT } from '../actions/product';
+import { ADD_PRODUCT, EDIT_PRODUCT, SET_PRODUCTS } from '../actions/product';
 import Product from '../../models/product';
 
 const initialState = {
@@ -31,6 +31,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         products: updatedProducts,
+      };
+    }
+    case SET_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload,
       };
     }
     default:

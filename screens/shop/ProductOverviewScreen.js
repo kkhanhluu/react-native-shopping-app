@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import ProductList from '../../components/ProductList';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
+import { setProducts } from '../../store/actions/product';
 
 const ProductOverviewScreen = (props) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products.products);
+  useEffect(async () => {
+    setRefreshing(true);
+    await dispatch(setProducts());
+    setRefreshing(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListener('willFocus', () => {
+      dispatch(setProducts());
+    });
+
+    return () => {
+      willFocusSub.remove();
+    };
+  }, [dispatch]);
 
   return (
     <View style={styles.screen}>
@@ -15,6 +34,8 @@ const ProductOverviewScreen = (props) => {
         listData={allProducts}
         navigation={props.navigation}
         parentScreen='productOverviewScreen'
+        onRefresh={() => dispatch(setProducts())}
+        refreshing={refreshing}
       />
     </View>
   );

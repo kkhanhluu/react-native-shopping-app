@@ -37,6 +37,8 @@ const ProductList = (props) => {
       renderItem={renderProductItem}
       numColumns={2}
       style={styles.list}
+      onRefresh={props.onRefresh}
+      refreshing={props.refreshing}
     />
   );
 };

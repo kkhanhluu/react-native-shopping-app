@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 import { AppLoading } from 'expo';
+import ReduxThunk from 'redux-thunk';
 
 import Navigator from './navigation/shoppingAppNavigator';
 import productReducer from './store/reducers/product';
@@ -27,7 +28,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   order: orderReducer,
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
