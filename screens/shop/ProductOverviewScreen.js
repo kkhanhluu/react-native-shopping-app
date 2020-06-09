@@ -12,10 +12,14 @@ const ProductOverviewScreen = (props) => {
 
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products.products);
-  useEffect(async () => {
-    setRefreshing(true);
-    await dispatch(setProducts());
-    setRefreshing(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setRefreshing(true);
+      await dispatch(setProducts());
+      setRefreshing(false);
+    };
+    fetchProducts();
   }, [dispatch]);
 
   useEffect(() => {

@@ -3,9 +3,10 @@ export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 export const setProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     const response = await fetch(
-      'https://rn-shopping-app-4d64b.firebaseio.com/products.json'
+      `https://rn-shopping-app-4d64b.firebaseio.com/products.json?auth=${token}`
     );
     const resData = await response.json();
 

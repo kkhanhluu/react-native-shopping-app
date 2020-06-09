@@ -3,7 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Feather, SimpleLineIcons, Ionicons } from '@expo/vector-icons';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
 import CartScreen from '../screens/shop/CartScreen';
@@ -12,7 +12,11 @@ import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 import UserProductScreen from '../screens/user/UserProductScreen';
 import AuthScreen from '../screens/user/AuthScreen';
+import StartupScreen from '../screens/StartupScreen';
 import Colors from '../constants/Colors';
+import { View, SafeAreaView, Button } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/auth';
 
 const ProductStackNavigator = createStackNavigator({
   ProductOverview: {
@@ -100,13 +104,34 @@ const sideDrawerNavigator = createDrawerNavigator(
     contentOptions: {
       activeTintColor: Colors.second,
     },
+    contentComponent: (props) => {
+      const dispatch = useDispatch();
+
+      return (
+        <View style={{ flex: 1 }}>
+          <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+            <DrawerItems {...props} />
+            <Button
+              title='Logout'
+              color={Colors.primary}
+              onPress={() => {
+                props.navigation.navigate('Auth');
+                dispatch(logout());
+              }}
+            />
+          </SafeAreaView>
+        </View>
+      );
+    },
   }
 );
 
 const AuthNavigator = createStackNavigator({
   Auth: { screen: AuthScreen, navigationOptions: { headerShown: false } },
 });
+
 const MainNavigator = createSwitchNavigator({
+  Startup: { screen: StartupScreen },
   Auth: AuthNavigator,
   Shop: sideDrawerNavigator,
 });
